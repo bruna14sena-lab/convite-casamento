@@ -1,272 +1,122 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Convite — Rosângela & Moisés</title>
   <style>
     body {
+      background-color: #ffe6f0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #fde8ef;
-      color: #333;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-      overflow-x: hidden;
-      position: relative;
-      min-height: 100vh;
-      animation: fadeIn 2s ease-in;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .flower {
-      position: fixed;
-      background: radial-gradient(circle at center, #f8c1c6 0%, #db7595 70%);
-      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-      box-shadow:
-        10px 0 0 #f8c1c6,
-        -10px 0 0 #f8c1c6,
-        0 10px 0 #f8c1c6,
-        0 -10px 0 #f8c1c6;
-      width: 20px;
-      height: 20px;
-      opacity: 0.8;
-      animation: floatUp linear infinite;
-    }
-    .flower.small {
-      width: 12px;
-      height: 12px;
-      animation-duration: 10s;
-      opacity: 0.6;
-    }
-    .flower.medium {
-      width: 18px;
-      height: 18px;
-      animation-duration: 15s;
-      opacity: 0.75;
-    }
-    .flower.large {
-      width: 25px;
-      height: 25px;
-      animation-duration: 20s;
-      opacity: 0.9;
-    }
-    @keyframes floatUp {
-      0% {
-        transform: translateY(100vh) translateX(0) rotate(0deg);
-        opacity: 0;
-      }
-      10% {
-        opacity: 0.8;
-      }
-      100% {
-        transform: translateY(-20vh) translateX(30px) rotate(360deg);
-        opacity: 0;
-      }
-    }
-
-    .invite-img {
-      max-width: 100%;
-      max-height: 400px;
-      border-radius: 8px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-      margin-bottom: 20px;
-      cursor: pointer;
-      z-index: 10;
-      position: relative;
-    }
-
-    .details {
+      padding: 0;
       text-align: center;
+    }
+
+    .container {
+      background-color: #fff;
       max-width: 600px;
-      z-index: 10;
-      position: relative;
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
+      margin: 40px auto;
+      padding: 30px;
+      border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
-    .details h1 {
+    .invite-img {
+      width: 100%;
+      max-width: 400px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      color: #a03c6f;
       font-size: 28px;
-      color: #b3547a;
-      margin-bottom: 10px;
-    }
-    .details p {
-      font-size: 18px;
-      margin: 5px 0;
     }
 
-    #countdown {
+    p {
+      font-size: 16px;
+      color: #333;
+      margin: 10px 0;
+    }
+
+    strong {
+      color: #000;
+    }
+
+    .countdown {
+      margin: 20px 0;
       font-weight: bold;
-      color: #b3547a;
-      margin-top: 20px;
-      font-size: 20px;
-      z-index: 10;
-      position: relative;
+      color: #a03c6f;
+      font-size: 18px;
     }
 
-    .rsvp-btn, #confirm-btn {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #b3547a;
+    .btn {
+      background-color: #e75480;
       color: white;
       border: none;
-      border-radius: 8px;
+      padding: 12px 25px;
       font-size: 16px;
+      border-radius: 8px;
       cursor: pointer;
-      text-decoration: none;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-      transition: background-color 0.3s ease;
-      z-index: 10;
-      position: relative;
-    }
-    .rsvp-btn:hover, #confirm-btn:hover {
-      background-color: #9c3b60;
+      display: inline-flex;
+      align-items: center;
     }
 
-    @media (max-width: 600px) {
-      .details h1 { font-size: 24px; }
-      .details p, #countdown { font-size: 16px; }
+    .btn:hover {
+      background-color: #c0436a;
     }
 
-    #player {
-      width: 0;
-      height: 0;
-      overflow: hidden;
-      position: absolute;
-      left: -9999px;
-      top: -9999px;
+    .btn i {
+      margin-right: 8px;
     }
   </style>
 </head>
-<body onload="autoPlayMusic()">
+<body>
+  <div class="container">
 
-  <div id="flowers-background">
-    <div class="flower small"></div>
-    <div class="flower medium"></div>
-    <div class="flower large"></div>
-    <div class="flower medium"></div>
-    <div class="flower small"></div>
-  </div>
+    <!-- IMAGEM DO CONVITE -->
+    <img src="imagem/invite.gif" alt="Convite de Casamento" class="invite-img"/>
 
-  <img src="imagem/invite.gif" alt="Convite de casamento" class="invite-img" onclick="playMusic()" />
-
-  <div class="details">
+    <!-- TÍTULO -->
     <h1>Rosângela & Moisés</h1>
+
     <p>Com muita alegria, convidamos você para celebrar conosco esse momento especial.</p>
     <p><strong>Data:</strong> 01 de novembro de 2025</p>
     <p><strong>Hora:</strong> 19h</p>
     <p><strong>Local:</strong> Espaço Solares, 203 — em frente ao Estádio Fagundão</p>
 
-    <div id="countdown">⌛ Carregando contagem...</div>
+    <!-- CONTAGEM REGRESSIVA -->
+    <p class="countdown">⌛ Carregando contagem regressiva...</p>
 
-    <button id="confirm-btn">✅ Confirmar Presença</button>
+    <!-- BOTÃO DE CONFIRMAR PRESENÇA -->
+    <button class="btn" onclick="confirmarPresenca()">
+      ✅ Confirmar Presença
+    </button>
+
   </div>
 
-  <div id="player"></div>
+  <script>
+    // Função de contagem regressiva
+    const dataCasamento = new Date("2025-11-01T19:00:00").getTime();
+    const countdownEl = document.querySelector('.countdown');
 
-  <script type="module">
-    // Firebase imports
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    setInterval(() => {
+      const agora = new Date().getTime();
+      const distancia = dataCasamento - agora;
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyASqpZQPe3EdDEkQTTfpFlQ0OTLOXl-Vqg",
-      authDomain: "convite-casamento-roseemoises.firebaseapp.com",
-      projectId: "convite-casamento-roseemoises",
-      storageBucket: "convite-casamento-roseemoises.appspot.com",
-      messagingSenderId: "669844867700",
-      appId: "1:669844867700:web:beff754046ebaf0a829f21",
-      measurementId: "G-745K650G1E"
-    };
+      const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+      const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+      const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+      countdownEl.innerHTML = `⌛ Faltam ${dias}d ${horas}h ${minutos}m ${segundos}s para o grande dia!`;
+    }, 1000);
 
-    // Música de fundo
-    var YT_VIDEO_ID = 'LkUdJTLOF1E';
-    var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    document.head.appendChild(tag);
-
-    var player;
-    function onYouTubeIframeAPIReady(){
-      player = new YT.Player('player', {
-        height: '0',
-        width: '0',
-        videoId: YT_VIDEO_ID,
-        playerVars: {
-          autoplay: 1,
-          controls: 0,
-          loop: 1,
-          playlist: YT_VIDEO_ID,
-          modestbranding: 1
-        },
-        events: {
-          'onReady': function(e){ e.target.playVideo(); }
-        }
-      });
+    // Função do botão
+    function confirmarPresenca() {
+      alert("Sua presença foi confirmada com sucesso! 💖");
     }
-
-    function autoPlayMusic(){
-      if (typeof playMusic === "function") {
-        setTimeout(playMusic, 1000);
-      }
-    }
-
-    function playMusic(){
-      if(player && typeof player.playVideo === 'function'){
-        player.playVideo();
-      } else {
-        window.open('https://www.youtube.com/watch?v=' + YT_VIDEO_ID, '_blank');
-      }
-    }
-
-    // Contagem regressiva
-    function updateCountdown() {
-      const countDownDate = new Date("November 1, 2025 19:00:00").getTime();
-      const now = new Date().getTime();
-      const distance = countDownDate - now;
-
-      if (distance < 0) {
-        document.getElementById("countdown").innerHTML = "🎉 O grande dia chegou!";
-        return;
-      }
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      document.getElementById("countdown").innerHTML = `⌛ Faltam ${days}d ${hours}h ${minutes}m ${seconds}s para o grande dia!`;
-    }
-
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-
-    // Botão de confirmação de presença
-    const btn = document.getElementById("confirm-btn");
-    btn.addEventListener("click", async () => {
-      try {
-        await addDoc(collection(db, "confirmacoes"), {
-          timestamp: new Date(),
-          confirmado: true
-        });
-        alert("Presença confirmada! Obrigada 💖");
-        btn.disabled = true;
-        btn.innerText = "✔ Confirmado";
-      } catch(error) {
-        alert("Erro ao confirmar. Tente novamente.");
-        console.error("Erro:", error);
-      }
-    });
   </script>
-
 </body>
 </html>
