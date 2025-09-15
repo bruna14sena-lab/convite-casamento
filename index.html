@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Convite — Rosangela & Moisés</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fde8ef;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+      animation: fadeIn 2s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Flores animadas em CSS */
+    .flower {
+      position: fixed;
+      background: radial-gradient(circle at center, #f8c1c6 0%, #db7595 70%);
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      box-shadow:
+        10px 0 0 #f8c1c6,
+        -10px 0 0 #f8c1c6,
+        0 10px 0 #f8c1c6,
+        0 -10px 0 #f8c1c6;
+      width: 20px;
+      height: 20px;
+      opacity: 0.8;
+      animation: floatUp linear infinite;
+    }
+
+    /* Variações de tamanho */
+    .flower.small {
+      width: 12px;
+      height: 12px;
+      animation-duration: 10s;
+      opacity: 0.6;
+    }
+    .flower.medium {
+      width: 18px;
+      height: 18px;
+      animation-duration: 15s;
+      opacity: 0.75;
+    }
+    .flower.large {
+      width: 25px;
+      height: 25px;
+      animation-duration: 20s;
+      opacity: 0.9;
+    }
+
+    /* Animação de subir e flutuar */
+    @keyframes floatUp {
+      0% {
+        transform: translateY(100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-20vh) translateX(30px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Posições diferentes pra cada flor */
+    .flower:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .flower:nth-child(2) { left: 30%; animation-delay: 4s; animation-duration: 12s; }
+    .flower:nth-child(3) { left: 50%; animation-delay: 2s; animation-duration: 18s; }
+    .flower:nth-child(4) { left: 70%; animation-delay: 6s; animation-duration: 15s; }
+    .flower:nth-child(5) { left: 85%; animation-delay: 3s; animation-duration: 20s; }
+
+    .invite-img {
+      max-width: 100%;
+      max-height: 600px;
+      border-radius: 8px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+      margin-bottom: 20px;
+      cursor: pointer;
+      z-index: 10;
+      position: relative;
+    }
+
+    .details {
+      text-align: center;
+      max-width: 600px;
+      z-index: 10;
+      position: relative;
+    }
+
+    .details h1 {
+      font-size: 28px;
+      color: #b3547a;
+      margin-bottom: 10px;
+    }
+
+    .details p {
+      font-size: 18px;
+      margin: 5px 0;
+    }
+
+    .countdown {
+      font-weight: bold;
+      color: #b3547a;
+      margin-top: 20px;
+      font-size: 18px;
+      z-index: 10;
+      position: relative;
+    }
+
+    .play-btn, .rsvp-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #b3547a;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      display: inline-block;
+      z-index: 10;
+      position: relative;
+    }
+
+    @media (max-width: 600px) {
+      .details h1 { font-size: 24px; }
+      .details p, .countdown { font-size: 16px; }
+    }
+
+    #player {
+      width: 0;
+      height: 0;
+      overflow: hidden;
+      position: absolute;
+      left: -9999px;
+      top: -9999px;
+    }
+  </style>
+</head>
+<body onload="autoPlayMusic()">
+
+  <!-- Flores animadas -->
+  <div class="flower small"></div>
+  <div class="flower medium"></div>
+  <div class="flower large"></div>
+  <div class="flower medium"></div>
+  <div class="flower small"></div>
+
+  <img src="img/invite.gif" alt="Convite de casamento" class="invite-img" onclick="playMusic()" />
+
+  <div class="details">
+    <h1>Rosangela & Moisés</h1>
+    <p>Com muita alegria, convidamos você para celebrar conosco esse momento especial.</p>
+    <p><strong>Data:</strong> 01 de novembro de 2025</p>
+    <p><strong>Hora:</strong> 19h</p>
+    <p><strong>Local:</strong> Espaço Solares, 203 — em frente ao Estádio Fagundão</p>
+
+    <p class="countdown" id="countdown"></p>
+
+    <p>Contamos com sua presença!</p>
+    <p><a class="rsvp-btn" href="https://wa.me/5573991310931" target="_blank" rel="noopener noreferrer">📲 Confirmar presença pelo WhatsApp</a></p>
+  </div>
+
+  <div id="player"></div>
+
+  <script>
+    var YT_VIDEO_ID = 'LkUdJTLOF1E';
+
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(tag);
+
+    var player;
+    function onYouTubeIframeAPIReady(){
+      player = new YT.Player('player', {
+        height: '0',
+        width: '0',
+        videoId: YT_VIDEO_ID,
+        playerVars: {
+          autoplay: 1,
+          controls: 0,
+          loop: 1,
+          playlist: YT_VIDEO_ID,
+          modestbranding: 1
+        },
+        events: {
+          'onReady': function(e){ e.target.playVideo(); }
+        }
+      });
+    }
+
+    function autoPlayMusic(){
+      if (typeof playMusic === "function") {
+        setTimeout(playMusic, 1000);
+      }
+    }
+
+    function playMusic(){
+      if(player && typeof player.playVideo === 'function'){
+        player.playVideo();
+      } else {
+        window.open('https://www.youtube.com/watch?v=' + YT_VIDEO_ID, '_blank');
+      }
+    }
+
+    // Contagem regressiva
+    function updateCountdown() {
+      const countdownEl = document.getElementById('countdown');
+      const eventDate = new Date('2025-11-01T19:00:00');
+      const now = new Date();
+      const diff = eventDate - now;
+
+      if(diff <= 0){
+        countdownEl.textContent = "🎉 O grande dia chegou! 🎉";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      countdownEl.textContent = `⏳ Faltam ${days}d ${hours}h ${minutes}m ${seconds}s para o grande dia!`;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+
+</body>
+</html>
