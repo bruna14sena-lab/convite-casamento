@@ -1,122 +1,171 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Convite — Rosângela & Moisés</title>
-  <style>
-    body {
-      background-color: #ffe6f0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Convite Rosângela & Moisés</title>
+<style>
+  /* Fundo rosa claro */
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #ffe6f0;
+    overflow-x: hidden;
+    position: relative;
+  }
 
-    .container {
-      background-color: #fff;
-      max-width: 600px;
-      margin: 40px auto;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
+  /* Flores animadas no fundo */
+  .flores-fundo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .flor {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    opacity: 0.15;
+    animation: float 20s ease-in-out infinite;
+  }
+  .flor:nth-child(2) {
+    width: 150px;
+    top: 30%;
+    left: 10%;
+    animation-duration: 25s;
+    opacity: 0.1;
+  }
+  .flor:nth-child(3) {
+    width: 130px;
+    top: 65%;
+    left: 80%;
+    animation-duration: 18s;
+    opacity: 0.12;
+  }
 
-    .invite-img {
-      width: 100%;
-      max-width: 400px;
-      margin-bottom: 20px;
-      border-radius: 10px;
-    }
+  @keyframes float {
+    0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
+    50% { transform: translateY(-20px) translateX(15px) rotate(15deg); }
+  }
 
+  /* Container do convite */
+  .convite-container {
+    position: relative;
+    max-width: 450px;
+    margin: 60px auto 60px;
+    background: white;
+    border-radius: 12px;
+    padding: 30px 25px 40px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    text-align: center;
+    z-index: 1;
+  }
+
+  /* Imagem convite */
+  .convite-img {
+    max-width: 100%;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  /* Título */
+  h1 {
+    color: #a6376e;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  /* Texto convite */
+  .texto-convite {
+    font-size: 1rem;
+    color: #222;
+    margin-bottom: 18px;
+    line-height: 1.4;
+  }
+  .texto-convite b {
+    font-weight: 700;
+  }
+
+  /* Contagem regressiva */
+  .contagem {
+    color: #a6376e;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin: 22px 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .contagem span {
+    font-weight: 900;
+  }
+
+  /* Ícone ampulheta */
+  .ampulheta {
+    font-size: 1.5rem;
+  }
+
+  /* Botão */
+  .btn-confirmar {
+    background-color: #c6467c;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s ease;
+  }
+  .btn-confirmar:hover {
+    background-color: #a6376e;
+  }
+
+  /* Ícone check no botão */
+  .btn-confirmar svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Responsividade para celular */
+  @media (max-width: 480px) {
+    .convite-container {
+      margin: 20px 10px 40px;
+      padding: 20px 18px 30px;
+    }
     h1 {
-      color: #a03c6f;
-      font-size: 28px;
+      font-size: 1.6rem;
     }
-
-    p {
-      font-size: 16px;
-      color: #333;
-      margin: 10px 0;
+    .texto-convite {
+      font-size: 0.95rem;
     }
-
-    strong {
-      color: #000;
+    .btn-confirmar {
+      width: 100%;
+      justify-content: center;
+      font-size: 1.1rem;
+      padding: 14px;
     }
-
-    .countdown {
-      margin: 20px 0;
-      font-weight: bold;
-      color: #a03c6f;
-      font-size: 18px;
-    }
-
-    .btn {
-      background-color: #e75480;
-      color: white;
-      border: none;
-      padding: 12px 25px;
-      font-size: 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-    }
-
-    .btn:hover {
-      background-color: #c0436a;
-    }
-
-    .btn i {
-      margin-right: 8px;
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
-  <div class="container">
 
-    <!-- IMAGEM DO CONVITE -->
-    <img src="imagem/invite.gif" alt="Convite de Casamento" class="invite-img"/>
+<div class="flores-fundo" aria-hidden="true">
+  <!-- Flores animadas no fundo (usar imagens com transparência PNG ou SVG) -->
+  <img src="https://i.imgur.com/o6n5KFl.png" alt="" class="flor" style="top: 10%; left: 70%; animation-delay: 0s;">
+  <img src="https://i.imgur.com/5yH4hCr.png" alt="" class="flor" style="top: 40%; left: 15%; animation-delay: 5s;">
+  <img src="https://i.imgur.com/o6n5KFl.png" alt="" class="flor" style="top: 75%; left: 75%; animation-delay: 10s;">
+</div>
 
-    <!-- TÍTULO -->
-    <h1>Rosângela & Moisés</h1>
-
-    <p>Com muita alegria, convidamos você para celebrar conosco esse momento especial.</p>
-    <p><strong>Data:</strong> 01 de novembro de 2025</p>
-    <p><strong>Hora:</strong> 19h</p>
-    <p><strong>Local:</strong> Espaço Solares, 203 — em frente ao Estádio Fagundão</p>
-
-    <!-- CONTAGEM REGRESSIVA -->
-    <p class="countdown">⌛ Carregando contagem regressiva...</p>
-
-    <!-- BOTÃO DE CONFIRMAR PRESENÇA -->
-    <button class="btn" onclick="confirmarPresenca()">
-      ✅ Confirmar Presença
-    </button>
-
-  </div>
-
-  <script>
-    // Função de contagem regressiva
-    const dataCasamento = new Date("2025-11-01T19:00:00").getTime();
-    const countdownEl = document.querySelector('.countdown');
-
-    setInterval(() => {
-      const agora = new Date().getTime();
-      const distancia = dataCasamento - agora;
-
-      const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
-      const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
-      const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
-
-      countdownEl.innerHTML = `⌛ Faltam ${dias}d ${horas}h ${minutos}m ${segundos}s para o grande dia!`;
-    }, 1000);
-
-    // Função do botão
-    function confirmarPresenca() {
-      alert("Sua presença foi confirmada com sucesso! 💖");
-    }
-  </script>
-</body>
-</html>
+<div class="convite-container" role="main">
+  <img src="https://i.imgur.com/tYSZxtf.png" alt="Convite de Casamento Rosângela e Moisés" class="convite-img" />
+  <h
