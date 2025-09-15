@@ -1,171 +1,245 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Convite Rosângela & Moisés</title>
-<style>
-  /* Fundo rosa claro */
-  body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #ffe6f0;
-    overflow-x: hidden;
-    position: relative;
-  }
-
-  /* Flores animadas no fundo */
-  .flores-fundo {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 0;
-  }
-  .flor {
-    position: absolute;
-    width: 120px;
-    height: 120px;
-    opacity: 0.15;
-    animation: float 20s ease-in-out infinite;
-  }
-  .flor:nth-child(2) {
-    width: 150px;
-    top: 30%;
-    left: 10%;
-    animation-duration: 25s;
-    opacity: 0.1;
-  }
-  .flor:nth-child(3) {
-    width: 130px;
-    top: 65%;
-    left: 80%;
-    animation-duration: 18s;
-    opacity: 0.12;
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
-    50% { transform: translateY(-20px) translateX(15px) rotate(15deg); }
-  }
-
-  /* Container do convite */
-  .convite-container {
-    position: relative;
-    max-width: 450px;
-    margin: 60px auto 60px;
-    background: white;
-    border-radius: 12px;
-    padding: 30px 25px 40px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    text-align: center;
-    z-index: 1;
-  }
-
-  /* Imagem convite */
-  .convite-img {
-    max-width: 100%;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  }
-
-  /* Título */
-  h1 {
-    color: #a6376e;
-    font-weight: 700;
-    margin-bottom: 12px;
-  }
-
-  /* Texto convite */
-  .texto-convite {
-    font-size: 1rem;
-    color: #222;
-    margin-bottom: 18px;
-    line-height: 1.4;
-  }
-  .texto-convite b {
-    font-weight: 700;
-  }
-
-  /* Contagem regressiva */
-  .contagem {
-    color: #a6376e;
-    font-weight: 700;
-    font-size: 1.1rem;
-    margin: 22px 0 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-  }
-  .contagem span {
-    font-weight: 900;
-  }
-
-  /* Ícone ampulheta */
-  .ampulheta {
-    font-size: 1.5rem;
-  }
-
-  /* Botão */
-  .btn-confirmar {
-    background-color: #c6467c;
-    color: white;
-    border: none;
-    padding: 12px 28px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: background-color 0.3s ease;
-  }
-  .btn-confirmar:hover {
-    background-color: #a6376e;
-  }
-
-  /* Ícone check no botão */
-  .btn-confirmar svg {
-    width: 18px;
-    height: 18px;
-  }
-
-  /* Responsividade para celular */
-  @media (max-width: 480px) {
-    .convite-container {
-      margin: 20px 10px 40px;
-      padding: 20px 18px 30px;
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Convite — Rosangela & Moisés</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fde8ef;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+      animation: fadeIn 2s ease-in;
     }
-    h1 {
-      font-size: 1.6rem;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    .texto-convite {
-      font-size: 0.95rem;
+
+    /* Flores animadas em CSS */
+    .flower {
+      position: fixed;
+      background: radial-gradient(circle at center, #f8c1c6 0%, #db7595 70%);
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      box-shadow:
+        10px 0 0 #f8c1c6,
+        -10px 0 0 #f8c1c6,
+        0 10px 0 #f8c1c6,
+        0 -10px 0 #f8c1c6;
+      width: 20px;
+      height: 20px;
+      opacity: 0.8;
+      animation: floatUp linear infinite;
     }
-    .btn-confirmar {
-      width: 100%;
-      justify-content: center;
-      font-size: 1.1rem;
-      padding: 14px;
+
+    /* Variações de tamanho */
+    .flower.small {
+      width: 12px;
+      height: 12px;
+      animation-duration: 10s;
+      opacity: 0.6;
     }
-  }
-</style>
+    .flower.medium {
+      width: 18px;
+      height: 18px;
+      animation-duration: 15s;
+      opacity: 0.75;
+    }
+    .flower.large {
+      width: 25px;
+      height: 25px;
+      animation-duration: 20s;
+      opacity: 0.9;
+    }
+
+    /* Animação de subir e flutuar */
+    @keyframes floatUp {
+      0% {
+        transform: translateY(100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-20vh) translateX(30px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Posições diferentes pra cada flor */
+    .flower:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .flower:nth-child(2) { left: 30%; animation-delay: 4s; animation-duration: 12s; }
+    .flower:nth-child(3) { left: 50%; animation-delay: 2s; animation-duration: 18s; }
+    .flower:nth-child(4) { left: 70%; animation-delay: 6s; animation-duration: 15s; }
+    .flower:nth-child(5) { left: 85%; animation-delay: 3s; animation-duration: 20s; }
+
+    .invite-img {
+      max-width: 100%;
+      max-height: 600px;
+      border-radius: 8px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+      margin-bottom: 20px;
+      cursor: pointer;
+      z-index: 10;
+      position: relative;
+    }
+
+    .details {
+      text-align: center;
+      max-width: 600px;
+      z-index: 10;
+      position: relative;
+    }
+
+    .details h1 {
+      font-size: 28px;
+      color: #b3547a;
+      margin-bottom: 10px;
+    }
+
+    .details p {
+      font-size: 18px;
+      margin: 5px 0;
+    }
+
+    .countdown {
+      font-weight: bold;
+      color: #b3547a;
+      margin-top: 20px;
+      font-size: 18px;
+      z-index: 10;
+      position: relative;
+    }
+
+    .play-btn, .rsvp-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #b3547a;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      display: inline-block;
+      z-index: 10;
+      position: relative;
+    }
+
+    @media (max-width: 600px) {
+      .details h1 { font-size: 24px; }
+      .details p, .countdown { font-size: 16px; }
+    }
+
+    #player {
+      width: 0;
+      height: 0;
+      overflow: hidden;
+      position: absolute;
+      left: -9999px;
+      top: -9999px;
+    }
+  </style>
 </head>
-<body>
+<body onload="autoPlayMusic()">
 
-<div class="flores-fundo" aria-hidden="true">
-  <!-- Flores animadas no fundo (usar imagens com transparência PNG ou SVG) -->
-  <img src="https://i.imgur.com/o6n5KFl.png" alt="" class="flor" style="top: 10%; left: 70%; animation-delay: 0s;">
-  <img src="https://i.imgur.com/5yH4hCr.png" alt="" class="flor" style="top: 40%; left: 15%; animation-delay: 5s;">
-  <img src="https://i.imgur.com/o6n5KFl.png" alt="" class="flor" style="top: 75%; left: 75%; animation-delay: 10s;">
-</div>
+  <!-- Flores animadas -->
+  <div class="flower small"></div>
+  <div class="flower medium"></div>
+  <div class="flower large"></div>
+  <div class="flower medium"></div>
+  <div class="flower small"></div>
 
-<div class="convite-container" role="main">
-  <img src="https://i.imgur.com/tYSZxtf.png" alt="Convite de Casamento Rosângela e Moisés" class="convite-img" />
-  <h
+  <img src="img/invite.gif" alt="Convite de casamento" class="invite-img" onclick="playMusic()" />
+
+  <div class="details">
+    <h1>Rosangela & Moisés</h1>
+    <p>Com muita alegria, convidamos você para celebrar conosco esse momento especial.</p>
+    <p><strong>Data:</strong> 01 de novembro de 2025</p>
+    <p><strong>Hora:</strong> 19h</p>
+    <p><strong>Local:</strong> Espaço Solares, 203 — em frente ao Estádio Fagundão</p>
+
+    <p class="countdown" id="countdown"></p>
+
+    <p>Contamos com sua presença!</p>
+    <p><a class="rsvp-btn" href="https://wa.me/5573991310931" target="_blank" rel="noopener noreferrer">📲 Confirmar presença pelo WhatsApp</a></p>
+  </div>
+
+  <div id="player"></div>
+
+  <script>
+    var YT_VIDEO_ID = 'LkUdJTLOF1E';
+
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(tag);
+
+    var player;
+    function onYouTubeIframeAPIReady(){
+      player = new YT.Player('player', {
+        height: '0',
+        width: '0',
+        videoId: YT_VIDEO_ID,
+        playerVars: {
+          autoplay: 1,
+          controls: 0,
+          loop: 1,
+          playlist: YT_VIDEO_ID,
+          modestbranding: 1
+        },
+        events: {
+          'onReady': function(e){ e.target.playVideo(); }
+        }
+      });
+    }
+
+    function autoPlayMusic(){
+      if (typeof playMusic === "function") {
+        setTimeout(playMusic, 1000);
+      }
+    }
+
+    function playMusic(){
+      if(player && typeof player.playVideo === 'function'){
+        player.playVideo();
+      } else {
+        window.open('https://www.youtube.com/watch?v=' + YT_VIDEO_ID, '_blank');
+      }
+    }
+
+    // Contagem regressiva
+    function updateCountdown() {
+      const countdownEl = document.getElementById('countdown');
+      const eventDate = new Date('2025-11-01T19:00:00');
+      const now = new Date();
+      const diff = eventDate - now;
+
+      if(diff <= 0){
+        countdownEl.textContent = "🎉 O grande dia chegou! 🎉";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      countdownEl.textContent = `⏳ Faltam ${days}d ${hours}h ${minutes}m ${seconds}s para o grande dia!`;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+
+</body>
+</html>
