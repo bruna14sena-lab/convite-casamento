@@ -1,11 +1,178 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Convite - Rosângela & Moisés</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Convite — Rosângela & Moisés</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fde8ef;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+      animation: fadeIn 2s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .flower {
+      position: fixed;
+      background: radial-gradient(circle at center, #f8c1c6 0%, #db7595 70%);
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      box-shadow:
+        10px 0 0 #f8c1c6,
+        -10px 0 0 #f8c1c6,
+        0 10px 0 #f8c1c6,
+        0 -10px 0 #f8c1c6;
+      width: 20px;
+      height: 20px;
+      opacity: 0.8;
+      animation: floatUp linear infinite;
+    }
+    .flower.small {
+      width: 12px;
+      height: 12px;
+      animation-duration: 10s;
+      opacity: 0.6;
+    }
+    .flower.medium {
+      width: 18px;
+      height: 18px;
+      animation-duration: 15s;
+      opacity: 0.75;
+    }
+    .flower.large {
+      width: 25px;
+      height: 25px;
+      animation-duration: 20s;
+      opacity: 0.9;
+    }
+    @keyframes floatUp {
+      0% {
+        transform: translateY(100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-20vh) translateX(30px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .invite-img {
+      max-width: 100%;
+      max-height: 400px;
+      border-radius: 8px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+      margin-bottom: 20px;
+      cursor: pointer;
+      z-index: 10;
+      position: relative;
+    }
+
+    .details {
+      text-align: center;
+      max-width: 600px;
+      z-index: 10;
+      position: relative;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .details h1 {
+      font-size: 28px;
+      color: #b3547a;
+      margin-bottom: 10px;
+    }
+    .details p {
+      font-size: 18px;
+      margin: 5px 0;
+    }
+
+    #countdown {
+      font-weight: bold;
+      color: #b3547a;
+      margin-top: 20px;
+      font-size: 20px;
+      z-index: 10;
+      position: relative;
+    }
+
+    .rsvp-btn, #confirm-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #b3547a;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      transition: background-color 0.3s ease;
+      z-index: 10;
+      position: relative;
+    }
+    .rsvp-btn:hover, #confirm-btn:hover {
+      background-color: #9c3b60;
+    }
+
+    @media (max-width: 600px) {
+      .details h1 { font-size: 24px; }
+      .details p, #countdown { font-size: 16px; }
+    }
+
+    #player {
+      width: 0;
+      height: 0;
+      overflow: hidden;
+      position: absolute;
+      left: -9999px;
+      top: -9999px;
+    }
+  </style>
+</head>
+<body onload="autoPlayMusic()">
+
+  <div id="flowers-background">
+    <div class="flower small"></div>
+    <div class="flower medium"></div>
+    <div class="flower large"></div>
+    <div class="flower medium"></div>
+    <div class="flower small"></div>
+  </div>
+
+  <img src="imagem/invite.gif" alt="Convite de casamento" class="invite-img" onclick="playMusic()" />
+
+  <div class="details">
+    <h1>Rosângela & Moisés</h1>
+    <p>Com muita alegria, convidamos você para celebrar conosco esse momento especial.</p>
+    <p><strong>Data:</strong> 01 de novembro de 2025</p>
+    <p><strong>Hora:</strong> 19h</p>
+    <p><strong>Local:</strong> Espaço Solares, 203 — em frente ao Estádio Fagundão</p>
+
+    <div id="countdown">⌛ Carregando contagem...</div>
+
+    <button id="confirm-btn">✅ Confirmar Presença</button>
+  </div>
+
+  <div id="player"></div>
+
   <script type="module">
-    // Firebase import
+    // Firebase imports
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -22,58 +189,84 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    async function confirmarPresenca() {
-      try {
-        await addDoc(collection(db, "confirmacoes"), {
-          nome: "Convidado",
-          data: new Date()
-        });
-        alert("Presença confirmada com sucesso! 🎉");
-      } catch (e) {
-        alert("Erro ao confirmar presença.");
-        console.error("Erro: ", e);
+    // Música de fundo
+    var YT_VIDEO_ID = 'LkUdJTLOF1E';
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(tag);
+
+    var player;
+    function onYouTubeIframeAPIReady(){
+      player = new YT.Player('player', {
+        height: '0',
+        width: '0',
+        videoId: YT_VIDEO_ID,
+        playerVars: {
+          autoplay: 1,
+          controls: 0,
+          loop: 1,
+          playlist: YT_VIDEO_ID,
+          modestbranding: 1
+        },
+        events: {
+          'onReady': function(e){ e.target.playVideo(); }
+        }
+      });
+    }
+
+    function autoPlayMusic(){
+      if (typeof playMusic === "function") {
+        setTimeout(playMusic, 1000);
       }
     }
 
-    window.confirmarPresenca = confirmarPresenca;
+    function playMusic(){
+      if(player && typeof player.playVideo === 'function'){
+        player.playVideo();
+      } else {
+        window.open('https://www.youtube.com/watch?v=' + YT_VIDEO_ID, '_blank');
+      }
+    }
+
+    // Contagem regressiva
+    function updateCountdown() {
+      const countDownDate = new Date("November 1, 2025 19:00:00").getTime();
+      const now = new Date().getTime();
+      const distance = countDownDate - now;
+
+      if (distance < 0) {
+        document.getElementById("countdown").innerHTML = "🎉 O grande dia chegou!";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("countdown").innerHTML = `⌛ Faltam ${days}d ${hours}h ${minutes}m ${seconds}s para o grande dia!`;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // Botão de confirmação de presença
+    const btn = document.getElementById("confirm-btn");
+    btn.addEventListener("click", async () => {
+      try {
+        await addDoc(collection(db, "confirmacoes"), {
+          timestamp: new Date(),
+          confirmado: true
+        });
+        alert("Presença confirmada! Obrigada 💖");
+        btn.disabled = true;
+        btn.innerText = "✔ Confirmado";
+      } catch(error) {
+        alert("Erro ao confirmar. Tente novamente.");
+        console.error("Erro:", error);
+      }
+    });
   </script>
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      text-align: center;
-      background: #fff0f5;
-      margin: 40px;
-    }
-    .convite {
-      background: white;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      display: inline-block;
-    }
-    button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 1rem;
-      background-color: #e75480;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #c7436d;
-    }
-  </style>
-</head>
-<body>
-  <div class="convite">
-    <h1>Rosângela & Moisés</h1>
-    <p>Com muita alegria, convidamos você para celebrar conosco esse momento especial.</p>
-    <p><strong>Data:</strong> 01 de Novembro de 2025</p>
-    <p><strong>Hora:</strong> 19h</p>
-    <p><strong>Local:</strong> Espaço Solene, 205 – em frente ao Estádio Fagulha</p>
-    <button onclick="confirmarPresenca()">Confirmar Presença</button>
-  </div>
+
 </body>
 </html>
